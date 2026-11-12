@@ -72,7 +72,9 @@ export function AgentChat({ paid }: { paid?: { status: string; shop?: string; am
               </li>
             ))}
           </ol>
-          <div className="bg-white border-2 border-stone-800 rounded-xl p-4 whitespace-pre-wrap text-stone-900">{res.text}</div>
+          <div className="bg-white border-2 border-stone-800 rounded-xl p-4 whitespace-pre-wrap text-stone-900">{res.text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+              part.startsWith("**") && part.endsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong> : part,
+            )}</div>
           {res.checkout?.approveUrl && (
             <a
               href={res.checkout.approveUrl}
